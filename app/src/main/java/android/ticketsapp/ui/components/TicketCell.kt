@@ -32,7 +32,7 @@ fun TicketCell(
     Card(
         modifier = Modifier
             .padding(10.dp)
-            .requiredHeight(230.dp),
+            .requiredHeight(270.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )

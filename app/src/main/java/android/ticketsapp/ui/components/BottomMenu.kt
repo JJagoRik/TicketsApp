@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 fun BottomMenu(){
     Row(
         modifier = Modifier
-            .requiredHeight(52.dp)
+            .requiredHeight(60.dp)
     ) {
         BottomMenuCell(R.drawable.avia_tickets, "Авиабилеты")
         BottomMenuCell(R.drawable.hotels, "Отели")
