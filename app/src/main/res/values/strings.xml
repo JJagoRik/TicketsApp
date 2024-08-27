@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TicketsApp</string>
+    <string name="title">Ticket</string>
+    <string name="error_description">No info</string>
+</resources>
