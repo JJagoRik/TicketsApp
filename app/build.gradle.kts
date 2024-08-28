@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
