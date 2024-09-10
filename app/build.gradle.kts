@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+    implementation("androidx.navigation:navigation-compose:2.8.0"
+    )
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -73,6 +75,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("io.coil-kt:coil-svg:2.7.0")
     implementation(libs.androidx.runtime.livedata)
+
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

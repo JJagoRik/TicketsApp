@@ -2,11 +2,19 @@ package android.ticketsapp.ui.screens
 
 import android.ticketsapp.R
 import android.ticketsapp.TicketsViewModel
+import android.ticketsapp.ui.components.IconCell
+import android.ticketsapp.ui.components.NavigationChooser
 import android.ticketsapp.ui.components.TicketsGrid
+import android.ticketsapp.ui.theme.DarkBlue
+import android.ticketsapp.ui.theme.DarkGreen
 import android.ticketsapp.ui.theme.Grey
+import android.ticketsapp.ui.theme.LightBlue
 import android.ticketsapp.ui.theme.LightGrey
+import android.ticketsapp.ui.theme.LightRed
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,10 +29,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -53,6 +63,8 @@ fun HomeScreen(){
     val tickets by booksViewModel.offersInfo.observeAsState(emptyList())
     var textFrom by remember { mutableStateOf(TextFieldValue("")) }
     var textTo by remember { mutableStateOf(TextFieldValue("")) }
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberBottomSheetScaffoldState()
 
     Column(
         modifier = Modifier
@@ -99,11 +111,14 @@ fun HomeScreen(){
                     .requiredWidth(340.dp)
                     .requiredHeight(110.dp)
                     .align(Alignment.Center)
+                    .clickable {
+                        showBottomSheet = true
+                    }
             ) {
                 Row(
                     modifier = Modifier
                         .padding(start = 10.dp)
-                        .align(Alignment.Center)
+                        .align(Alignment.Center),
                 ) {
                     Image(
                         painter = rememberImagePainter(
@@ -138,8 +153,10 @@ fun HomeScreen(){
                                         color = Color.White,
                                         fontSize = 16.sp
                                     ),
-                                    modifier = Modifier.fillMaxWidth(),
-                                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White)
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White),
+                                    enabled = false
                                 )
                                 if (textFrom.text.isEmpty()) {
                                     Text(
@@ -171,8 +188,10 @@ fun HomeScreen(){
                                         color = Color.White,
                                         fontSize = 16.sp
                                     ),
-                                    modifier = Modifier.fillMaxWidth(),
-                                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White)
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White),
+                                    enabled = false
                                 )
                                 if (textTo.text.isEmpty()) {
                                     Text(
@@ -181,7 +200,6 @@ fun HomeScreen(){
                                     )
                                 }
                             }
-
                         }
                     }
                 }
@@ -200,5 +218,41 @@ fun HomeScreen(){
         )
 
         TicketsGrid(tickets = tickets)
+
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Column {
+                        NavigationChooser(
+                            textFrom = textFrom,
+                            textTo = textTo,
+                            onTextFromChange = { textFrom = it },
+                            onTextToChange = { textTo = it },
+                            onCleanText = { textTo = TextFieldValue("") },
+                            onSwapText = { textFrom = textTo.also { textTo = textFrom } })
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 30.dp, bottom = 60.dp)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(20.dp)
+                            ) {
+                                IconCell(image = R.drawable.path, iconColor = DarkGreen, description = "Сложный маршрут")
+                                IconCell(image = R.drawable.sphere, iconColor = LightBlue, description = "Куда угодно")
+                                IconCell(image = R.drawable.calendar, iconColor = DarkBlue, description = "Выходные")
+                                IconCell(image = R.drawable.fire, iconColor = LightRed, description = "Горячие билеты")
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
     }
 }

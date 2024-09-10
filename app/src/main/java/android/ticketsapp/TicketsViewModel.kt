@@ -6,6 +6,8 @@ import android.ticketsapp.data.ticketsData.Ticket
 import android.ticketsapp.data.ticketsData.TicketsRepository
 import android.ticketsapp.network.models.Offer
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +29,7 @@ class TicketsViewModel(
 ) : ViewModel() {
 
     private val _offersPic = MutableLiveData<List<GalleryItem>>()
-    val offersPic: LiveData<List<GalleryItem>> = _offersPic
+    private val offersPic: LiveData<List<GalleryItem>> = _offersPic
 
     private val _offersInfo = MutableLiveData<List<Ticket>>()
     val offersInfo: LiveData<List<Ticket>> = _offersInfo
@@ -66,7 +68,7 @@ class TicketsViewModel(
     }
 
     private fun matchTicketsWithGalleryItems(tickets: List<Ticket>) {
-        val galleryItems = _offersPic.value ?: emptyList()
+        val galleryItems = offersPic.value ?: emptyList()
         if (galleryItems.isEmpty()) {
             Log.e("TicketsViewModel", "GalleryItems is empty")
             return
@@ -76,6 +78,11 @@ class TicketsViewModel(
             ticket.copy(imageUrl = galleryItem?.url)
         }
         _offersInfo.value = matchedTickets
+    }
+
+    private fun matchCitiesWithPics(){
+        val galleryItems = offersPic.value
+
     }
 
     companion object {

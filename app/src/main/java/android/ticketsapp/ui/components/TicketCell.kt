@@ -34,7 +34,6 @@ import coil.decode.SvgDecoder
 @Composable
 fun TicketCell(
     ticket: Ticket,
-    modifier: Modifier = Modifier
 ){
     Card(
         modifier = Modifier
@@ -42,7 +41,8 @@ fun TicketCell(
             .requiredHeight(270.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
-        )
+        ),
+        onClick = {}
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
